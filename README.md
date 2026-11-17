@@ -1,11 +1,26 @@
 ### Keyur Makwana — analytics engineer, Ahmedabad
 
-Self-taught. For nearly four years I've built and run the whole analytics stack at a quick-commerce FMCG
-brand on my own: the pipelines, a governed Postgres warehouse, the P&L in SQL, the dashboards, and an
-ask-your-data assistant on the Claude API. Open to analytics engineer roles, remote or relocating.
+Self-taught. For nearly four years I've run the whole analytics stack at a quick-commerce FMCG brand,
+alone: pipelines, a governed Postgres warehouse, the P&L in SQL, dashboards, and an ask-your-data
+assistant on the Claude API. Open to analytics engineer roles, remote or relocating.
 
 **Portfolio:** [illusionist-creator.github.io/Portfolio](https://illusionist-creator.github.io/Portfolio/) ·
 **LinkedIn:** [keyur-makwana](https://www.linkedin.com/in/keyur-makwana-450337197)
+
+#### The warehouse I run at work
+
+```mermaid
+flowchart LR
+  SRC["ERP over OData · Unicommerce over SOAP<br/>17 partner goods-receipt feeds · 22 payment-advice feeds<br/>ad platforms · Drive files · finance sheets · market panel"]
+  LOAD["16 ingestion repos<br/>Python on GitHub Actions<br/>pg_cron + pg_net, 35 jobs"]
+  subgraph PG["Supabase Postgres 17 · 85M rows · 259 migrations"]
+    RAW["Raw / landing"] --> MOD["Models: order-to-cash, P&L, MIS"] --> VIEWS["402 row-filtered views"]
+  end
+  SRC --> LOAD --> RAW
+  VIEWS --> ASK["Birbal: ask in plain English"]
+  VIEWS --> BOARDS["29 web boards"]
+  VIEWS --> PBI["Power BI"]
+```
 
 #### Things I built on public data
 
