@@ -11,12 +11,21 @@ assistant on the Claude API. Open to analytics engineer roles, remote or relocat
 
 ```mermaid
 flowchart LR
-  SRC["ERP over OData · Unicommerce over SOAP<br/>17 partner goods-receipt feeds · 22 payment-advice feeds<br/>ad platforms · Drive files · finance sheets · market panel"]
-  LOAD["16 ingestion repos<br/>Python on GitHub Actions<br/>pg_cron + pg_net, 35 jobs"]
-  subgraph PG["Supabase Postgres 17 · 85M rows · 259 migrations"]
-    RAW["Raw / landing"] --> MOD["Models: order-to-cash, P&L, MIS"] --> VIEWS["402 row-filtered views"]
+  subgraph SRC["Sources"]
+    ERP["ERP (OData)<br/>Unicommerce (SOAP)"]
+    GRN["17 goods-receipt feeds<br/>22 payment-advice feeds"]
+    ADS["Ad platforms<br/>Drive files"]
+    FIN["Finance sheets<br/>market panel"]
   end
-  SRC --> LOAD --> RAW
+  LOAD["16 ingestion repos<br/>Python, GitHub Actions<br/>pg_cron + pg_net"]
+  subgraph PG["Supabase Postgres 17 · 85M rows · 259 migrations"]
+    RAW["Raw / landing"] --> MOD["Models<br/>order-to-cash, P&L, MIS"] --> VIEWS["402 row-filtered<br/>views"]
+  end
+  ERP --> LOAD
+  GRN --> LOAD
+  ADS --> LOAD
+  FIN --> LOAD
+  LOAD --> RAW
   VIEWS --> ASK["Birbal: ask in plain English"]
   VIEWS --> BOARDS["29 web boards"]
   VIEWS --> PBI["Power BI"]
